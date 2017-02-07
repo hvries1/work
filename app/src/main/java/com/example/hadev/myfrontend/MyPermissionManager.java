@@ -15,6 +15,8 @@ public class MyPermissionManager implements PermissionManager {
 
     // Request code for READ_CONTACTS. It can be any number > 0.
     private static final int PERMISSIONS_REQUEST_READ_CONTACTS = 100;
+    
+    private static final String TAG = "Permission";
 
     @Override
     public boolean checkPermission(AppCompatActivity activity, String permission) {
@@ -22,14 +24,14 @@ public class MyPermissionManager implements PermissionManager {
             // Check the SDK version and whether the permission is already granted or not.
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M &&
                     activity.checkSelfPermission(Manifest.permission.READ_CONTACTS) != PackageManager.PERMISSION_GRANTED) {
-                Log.i("APP", "Request permissions to read contacts.");
-                Log.d("APP", "" + activity.checkSelfPermission(Manifest.permission.READ_CONTACTS));
+                Log.i(TAG, "Request permissions to read contacts.");
+                Log.d(TAG, "" + activity.checkSelfPermission(Manifest.permission.READ_CONTACTS));
                 activity.requestPermissions(new String[]{Manifest.permission.READ_CONTACTS}, PERMISSIONS_REQUEST_READ_CONTACTS);
                 //After this point you wait for callback in onRequestPermissionsResult(int, String[], int[]) overriden method
                 return false;
             }
             // Android version is lesser than 6.0 or the permission is already granted.
-            Log.i("APP", "Contact permissions have already been granted.");
+            Log.i(TAG, "Contact permissions have already been granted.");
             return true;
         }
         return false;
@@ -42,13 +44,13 @@ public class MyPermissionManager implements PermissionManager {
             if (grantResults.length > 0
                     && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 // Permission is granted
-                Log.d("APP", "permission granted");
+                Log.d(TAG, "permission granted");
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                    Log.d("APP", "" + activity.checkSelfPermission(Manifest.permission.READ_CONTACTS));
+                    Log.d(TAG, "" + activity.checkSelfPermission(Manifest.permission.READ_CONTACTS));
                 }
                 return true;
             } else {
-                Log.d("APP", "permission denied");
+                Log.d(TAG, "permission denied");
                 Toast.makeText(activity, "Until you grant the permission, we cannot display contacts", Toast.LENGTH_SHORT).show();
             }
         }

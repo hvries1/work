@@ -5,19 +5,20 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.Fragment;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
-    // Request code for READ_CONTACTS. It can be any number > 0.
-    private static final int PERMISSIONS_REQUEST_READ_CONTACTS = 100;
+    private static final String TAG = "MainActivity";
 
     MyPermissionManager permissionManager = new MyPermissionManager();
 
@@ -52,6 +53,9 @@ public class MainActivity extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
+        } else if (contactsIsShown()){
+            clearContent();
+            drawer.openDrawer(GravityCompat.START);
         } else {
             super.onBackPressed();
         }
@@ -87,7 +91,7 @@ public class MainActivity extends AppCompatActivity
         if (id == R.id.nav_camera) {
             // Handle the camera action
         } else if (id == R.id.nav_gallery) {
-
+            clearContent();
         } else if (id == R.id.nav_contacts) {
             // Check that the activity is using the layout version with the fragment_container FrameLayout
             if (findViewById(R.id.fragment_container) != null &&
@@ -129,5 +133,28 @@ public class MainActivity extends AppCompatActivity
         getSupportFragmentManager().beginTransaction().
                 add(R.id.fragment_container, contactsFragment).commit();
     }
+
+    /**
+     * Show the contacts in a fragment.
+     */
+    private void clearContent() {
+        for(Fragment fragment : getSupportFragmentManager().getFragments()){
+            if (fragment != null) {
+                Log.d(TAG, fragment.toString());
+                getSupportFragmentManager().beginTransaction().remove(fragment).commit();
+            }
+         }
+    }
+
+    private boolean contactsIsShown() {
+        for(Fragment fragment : getSupportFragmentManager().getFragments()){
+            if (fragment != null && fragment.getClass().equals(ContactsFragment.class)) {
+                Log.d(TAG, "Contants fragment is shown");
+                return true;
+            }
+        }
+        return false;
+    }
+
 
 }
