@@ -8,11 +8,13 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
+import android.widget.LinearLayout;
 
 public class ContactsFragment extends Fragment {
 
-    /** Called when the activity is first created. */
+   /**
+    * Called when the activity is first created.
+    */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState) {
         // Defines the xml file for the fragment
@@ -25,15 +27,13 @@ public class ContactsFragment extends Fragment {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         // Setup any handles to view objects here
         // EditText etFoo = (EditText) view.findViewById(R.id.etFoo);
-        TextView contactView = (TextView) this.getView().findViewById(R.id.contactview);
+        LinearLayout contactView = (LinearLayout) this.getView().findViewById(R.id.contactview);
 
         Cursor cursor = getContacts();
         while (cursor.moveToNext()) {
             String displayName = cursor.getString(cursor
                     .getColumnIndex(ContactsContract.Data.DISPLAY_NAME));
-            contactView.append("Name: ");
-            contactView.append(displayName);
-            contactView.append("\n");
+            contactView.addView(new Contact(displayName).getListView(this.getContext()));
         }
     }
 
