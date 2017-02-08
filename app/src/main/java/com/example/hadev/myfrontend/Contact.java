@@ -18,10 +18,9 @@ public class Contact implements ViewObject {
 
     @Override
     public View getListView(Context context) {
-        TextView contactView = new TextView(context);
-        contactView.append("Name: ");
-        contactView.append(displayName);
-        contactView.append("\n");
+        View contactView= View.inflate(context, R.layout.contact_item, null);
+        TextView name = (TextView) contactView.findViewById(R.id.name);
+        name.setText(displayName);
         return contactView;
     }
 
