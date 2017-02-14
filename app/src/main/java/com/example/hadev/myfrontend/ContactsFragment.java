@@ -34,7 +34,8 @@ public class ContactsFragment extends Fragment {
         Cursor cursor = getStoredContacts();
         while (cursor.moveToNext()) {
             String displayName = cursor.getString(cursor.getColumnIndex(ContactProvider.NAME));
-            contactView.addView(new Contact(displayName).getListView(this.getContext()));
+            String phoneNumber = cursor.getString(cursor.getColumnIndex(ContactProvider.PHONE));
+            contactView.addView(new Contact(displayName, phoneNumber).getListView(this.getContext()));
         }
     }
 
@@ -54,7 +55,7 @@ public class ContactsFragment extends Fragment {
     private Cursor getStoredContacts() {
         // Retrieve contacts from ContactsContract
         Uri uri = ContactProvider.CONTENT_URI;
-        String[] projection = new String[] { ContactProvider._ID, ContactProvider.NAME };
+        String[] projection = new String[] { ContactProvider._ID, ContactProvider.NAME, ContactProvider.PHONE };
         String selection = null;
         String[] selectionArgs = null;
         String sortOrder = ContactProvider.NAME + " COLLATE LOCALIZED ASC";

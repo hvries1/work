@@ -90,8 +90,9 @@ public class MainActivity extends AppCompatActivity
 
         if (id == R.id.nav_camera) {
             // Handle the camera action
-        } else if (id == R.id.nav_gallery) {
             clearContent();
+        } else if (id == R.id.nav_gallery) {
+            showImage();
         } else if (id == R.id.nav_contacts) {
             // Check that the activity is using the layout version with the fragment_container FrameLayout
             if (findViewById(R.id.fragment_container) != null &&
@@ -100,11 +101,11 @@ public class MainActivity extends AppCompatActivity
                 showContacts();
             }
         } else if (id == R.id.nav_manage) {
-
+            clearContent();
         } else if (id == R.id.nav_share) {
-
+            clearContent();
         } else if (id == R.id.nav_send) {
-
+            clearContent();
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -131,7 +132,7 @@ public class MainActivity extends AppCompatActivity
 
         // Add the fragment to the 'fragment_container' FrameLayout
         getSupportFragmentManager().beginTransaction().
-                add(R.id.fragment_container, contactsFragment).commit();
+                replace(R.id.fragment_container, contactsFragment).commit();
     }
 
     /**
@@ -156,5 +157,16 @@ public class MainActivity extends AppCompatActivity
         return false;
     }
 
+    /**
+     * Show the selected image in a fragment.
+     */
+    private void showImage() {
+        // Create new fragment
+        Fragment imageFragment = new ImageFragment();
+
+        // Add the fragment to the 'fragment_container' FrameLayout
+        getSupportFragmentManager().beginTransaction().
+                replace(R.id.fragment_container, imageFragment).commit();
+    }
 
 }

@@ -11,16 +11,20 @@ import android.widget.TextView;
 public class Contact implements ViewObject {
 
     private String displayName;
+    private String phoneNumber;
 
-    public Contact(String displayName) {
+    public Contact(String displayName,String phoneNumber) {
         this.displayName = displayName;
+        this.phoneNumber = phoneNumber;
     }
 
     @Override
     public View getListView(Context context) {
         View contactView= View.inflate(context, R.layout.contact_item, null);
-        TextView name = (TextView) contactView.findViewById(R.id.name);
-        name.setText(displayName);
+        TextView namePlaceholder = (TextView) contactView.findViewById(R.id.name);
+        namePlaceholder.setText(displayName);
+        TextView phonePlaceholder = (TextView) contactView.findViewById(R.id.phone);
+        phonePlaceholder.setText(phoneNumber);
         return contactView;
     }
 
