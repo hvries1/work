@@ -1,8 +1,10 @@
-package com.example.hadev.myfrontend;
+package com.example.hadev.myfrontend.domain;
 
 import android.content.Context;
 import android.view.View;
 import android.widget.TextView;
+
+import com.example.hadev.myfrontend.R;
 
 /**
  * Created by Hadev on 6-2-2017.

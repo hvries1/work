@@ -1,4 +1,4 @@
-package com.example.hadev.myfrontend;
+package com.example.hadev.myfrontend.main;
 
 import android.support.v7.app.AppCompatActivity;
 

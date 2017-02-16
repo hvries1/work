@@ -1,4 +1,4 @@
-package com.example.hadev.myfrontend;
+package com.example.hadev.myfrontend.main;
 
 import android.Manifest;
 import android.content.pm.PackageManager;

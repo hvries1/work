@@ -1,4 +1,4 @@
-package com.example.hadev.myfrontend;
+package com.example.hadev.myfrontend.domain;
 
 import android.content.Context;
 import android.view.View;

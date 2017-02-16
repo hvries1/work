@@ -1,4 +1,4 @@
-package com.example.hadev.myfrontend;
+package com.example.hadev.myfrontend.fragment;
 
 import android.database.Cursor;
 import android.net.Uri;
@@ -11,6 +11,8 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
 import com.example.data.ContactProvider;
+import com.example.hadev.myfrontend.domain.Contact;
+import com.example.hadev.myfrontend.R;
 
 public class ContactsFragment extends Fragment {
 

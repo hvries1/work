@@ -15,6 +15,10 @@
             android:icon="@drawable/ic_menu_contacts"
             android:title="Contacts" />
         <item
+            android:id="@+id/nav_shapes"
+            android:icon="@drawable/ic_format_shapes"
+            android:title="Shapes" />
+        <item
             android:id="@+id/nav_manage"
             android:icon="@drawable/ic_menu_manage"
             android:title="Settings" />

@@ -1,4 +1,4 @@
-package com.example.hadev.myfrontend;
+package com.example.hadev.myfrontend.main;
 
 import android.Manifest;
 import android.os.Bundle;
@@ -15,6 +15,11 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+
+import com.example.hadev.myfrontend.R;
+import com.example.hadev.myfrontend.fragment.ContactsFragment;
+import com.example.hadev.myfrontend.fragment.ImageFragment;
+import com.example.hadev.myfrontend.fragment.ShapeFragment;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -100,6 +105,8 @@ public class MainActivity extends AppCompatActivity
                     permissionManager.checkPermission(this, Manifest.permission.READ_CONTACTS)) {
                 showContacts();
             }
+        } else if (id == R.id.nav_shapes) {
+            showShapes();
         } else if (id == R.id.nav_manage) {
             clearContent();
         } else if (id == R.id.nav_share) {
@@ -167,6 +174,15 @@ public class MainActivity extends AppCompatActivity
         // Add the fragment to the 'fragment_container' FrameLayout
         getSupportFragmentManager().beginTransaction().
                 replace(R.id.fragment_container, imageFragment).commit();
+    }
+
+    private void showShapes() {
+        // Create new fragment
+        Fragment shapeFragment = new ShapeFragment();
+
+        // Add the fragment to the 'fragment_container' FrameLayout
+        getSupportFragmentManager().beginTransaction().
+                replace(R.id.fragment_container, shapeFragment).commit();
     }
 
 }
