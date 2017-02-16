@@ -15,6 +15,7 @@ import javax.microedition.khronos.opengles.GL10;
 public class MyRenderer implements GLSurfaceView.Renderer {
 
     private Triangle mTriangle;
+    private Triangle2 mTriangle2;
 
     // mMVPMatrix is an abbreviation for "Model View Projection Matrix"
     private final float[] mMVPMatrix = new float[16];
@@ -30,6 +31,7 @@ public class MyRenderer implements GLSurfaceView.Renderer {
 
         // initialize a triangle
         mTriangle = new Triangle();
+        mTriangle2 = new Triangle2();
     }
 
     public void onDrawFrame(GL10 unused) {
@@ -47,7 +49,7 @@ public class MyRenderer implements GLSurfaceView.Renderer {
         // Create a rotation transformation for the triangle
         long time = SystemClock.uptimeMillis() % 4000L;
         float angle = 0.090f * ((int) time);
-        Matrix.setRotateM(mRotationMatrix, 0, angle, -1.0f, 0, 0);
+        Matrix.setRotateM(mRotationMatrix, 0, angle, -1.0f, -0.5f, 0);
 
         // Combine the rotation matrix with the projection and camera view
         // Note that the mMVPMatrix factor *must be first* in order
@@ -55,6 +57,7 @@ public class MyRenderer implements GLSurfaceView.Renderer {
         Matrix.multiplyMM(scratch, 0, mMVPMatrix, 0, mRotationMatrix, 0);
 
         // Draw triangle
+        mTriangle2.draw(scratch);
         mTriangle.draw(scratch);
     }
 
@@ -66,7 +69,7 @@ public class MyRenderer implements GLSurfaceView.Renderer {
 
         // this projection matrix is applied to object coordinates
         // in the onDrawFrame() method
-        Matrix.frustumM(mProjectionMatrix, 0, -ratio, ratio, -1, 1, 3, 7);
+        Matrix.frustumM(mProjectionMatrix, 0, -ratio, ratio, -1, 1, 3, 30);
     }
 
     public static int loadShader(int type, String shaderCode){
