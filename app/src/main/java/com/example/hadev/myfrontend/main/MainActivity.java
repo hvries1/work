@@ -1,6 +1,9 @@
 package com.example.hadev.myfrontend.main;
 
 import android.Manifest;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.content.pm.ResolveInfo;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
@@ -9,6 +12,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -20,6 +24,8 @@ import com.example.hadev.myfrontend.R;
 import com.example.hadev.myfrontend.fragment.ContactsFragment;
 import com.example.hadev.myfrontend.fragment.ImageFragment;
 import com.example.hadev.myfrontend.fragment.ShapeFragment;
+
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -52,7 +58,16 @@ public class MainActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        showShapes();
+        // Handle intent, action and MIME type
+        Intent intent = getIntent();
+        String action = intent.getAction();
+        String type = intent.getType();
+        if (Intent.ACTION_SEND.equals(action) && type != null && type.contains("vcard")) {
+            showContacts();
+        } else {
+            // Handle other intents, such as being started from the home screen
+            showShapes();
+        }
     }
 
     @Override
@@ -112,7 +127,7 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.nav_manage) {
             clearContent();
         } else if (id == R.id.nav_share) {
-            clearContent();
+            shareContacts();
         } else if (id == R.id.nav_send) {
             clearContent();
         }
@@ -185,6 +200,35 @@ public class MainActivity extends AppCompatActivity
         // Add the fragment to the 'fragment_container' FrameLayout
         getSupportFragmentManager().beginTransaction().
                 replace(R.id.fragment_container, shapeFragment).commit();
+    }
+
+    private void shareContacts() {
+         // set up an intent to share the image
+        Intent share_intent = new Intent();
+        share_intent.setAction(Intent.ACTION_SEND);
+        share_intent.putExtra(Intent.EXTRA_TEXT, "Hadev, 0612345678");
+        share_intent.setType("text/plain");
+
+        // start the intent
+        try {
+            // gets the list of intents that can be loaded.
+            List<ResolveInfo> resInfo = getPackageManager().queryIntentActivities(share_intent, 0);
+            if (!resInfo.isEmpty()) {
+                for (ResolveInfo info : resInfo) {
+                    Log.i(TAG, info.toString());
+                }
+            }
+            startActivity(Intent.createChooser(share_intent, "Share contact info"));
+        } catch (android.content.ActivityNotFoundException ex) {
+            (new AlertDialog.Builder(this)
+                    .setMessage("Share contact failed")
+                    .setPositiveButton("OK",
+                            new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog,
+                                                    int whichButton) {
+                                }
+                            }).create()).show();
+        }
     }
 
 }
