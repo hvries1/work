@@ -41,7 +41,6 @@ public class ImageFragment extends Fragment {
         // Setup any handles to view objects here
         // EditText etFoo = (EditText) view.findViewById(R.id.etFoo);
         imageView = (ImageView) this.getView().findViewById(R.id.imageview);
-
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

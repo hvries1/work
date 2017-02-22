@@ -22,6 +22,7 @@ import android.view.View;
 
 import com.example.hadev.myfrontend.R;
 import com.example.hadev.myfrontend.fragment.ContactsFragment;
+import com.example.hadev.myfrontend.fragment.GalleryFragment;
 import com.example.hadev.myfrontend.fragment.ImageFragment;
 import com.example.hadev.myfrontend.fragment.ShapeFragment;
 
@@ -114,7 +115,7 @@ public class MainActivity extends AppCompatActivity
             // Handle the camera action
             clearContent();
         } else if (id == R.id.nav_gallery) {
-            showImage();
+            showGallery();
         } else if (id == R.id.nav_contacts) {
             // Check that the activity is using the layout version with the fragment_container FrameLayout
             if (findViewById(R.id.fragment_container) != null &&
@@ -125,7 +126,7 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.nav_shapes) {
             showShapes();
         } else if (id == R.id.nav_manage) {
-            clearContent();
+            showImage();
         } else if (id == R.id.nav_share) {
             shareContacts();
         } else if (id == R.id.nav_send) {
@@ -191,6 +192,15 @@ public class MainActivity extends AppCompatActivity
         // Add the fragment to the 'fragment_container' FrameLayout
         getSupportFragmentManager().beginTransaction().
                 replace(R.id.fragment_container, imageFragment).commit();
+    }
+
+    private void showGallery() {
+        // Create a new Fragment to be placed in the activity layout
+        GalleryFragment galleryFragment = new GalleryFragment();
+
+        // Add the fragment to the 'fragment_container' FrameLayout
+        getSupportFragmentManager().beginTransaction().
+                replace(R.id.fragment_container, galleryFragment).commit();
     }
 
     private void showShapes() {
