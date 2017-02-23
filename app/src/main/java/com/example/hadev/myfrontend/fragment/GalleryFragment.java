@@ -27,34 +27,13 @@ public class GalleryFragment extends Fragment {
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
-
         imageGrid = (GridView) this.getView().findViewById(R.id.gridview);
 
-        Thread thread = new Thread(new Runnable() {
-
-            @Override
-            public void run() {
-                ArrayList<Bitmap> bitmapList = new ArrayList<Bitmap>();
-                try {
-                    for(int i = 0; i < 6; i++) {
-                        bitmapList.add(urlImageToBitmap("https://placeholdit.imgix.net/~text?txtsize=14&txt=150%C3%97150&w=150&h=150"));
-                    }
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-                GalleryFragment.this.setImages(bitmapList);
-            }
-        });
-        thread.start();
-    }
-
-    private void setImages(final ArrayList<Bitmap> bitmapList) {
-        this.getActivity().runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                imageGrid.setAdapter(new ImageAdapter(GalleryFragment.this.getActivity(), bitmapList));
-            }
-        });
+        ArrayList<Bitmap> bitmapList = new ArrayList<Bitmap>();
+        for(int i = 0; i < 6; i++) {
+            bitmapList.add(BitmapFactory.decodeResource(null, R.mipmap.placeholder));
+        }
+        imageGrid.setAdapter(new ImageAdapter(this.getActivity(), bitmapList));
     }
 
     private Bitmap urlImageToBitmap(String imageUrl) throws Exception {
@@ -65,6 +44,5 @@ public class GalleryFragment extends Fragment {
         }
         return result;
     }
-
 
 }

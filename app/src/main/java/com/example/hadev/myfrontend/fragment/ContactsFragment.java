@@ -11,8 +11,9 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
 import com.example.data.ContactProvider;
-import com.example.hadev.myfrontend.domain.Contact;
+import com.example.data.SimpleDBAdapter;
 import com.example.hadev.myfrontend.R;
+import com.example.hadev.myfrontend.domain.Contact;
 
 public class ContactsFragment extends Fragment {
 
@@ -38,6 +39,14 @@ public class ContactsFragment extends Fragment {
             String displayName = cursor.getString(cursor.getColumnIndex(ContactProvider.NAME));
             String phoneNumber = cursor.getString(cursor.getColumnIndex(ContactProvider.PHONE));
             contactView.addView(new Contact(displayName, phoneNumber).getListView(this.getContext()));
+        }
+
+        try {
+            for (Contact contact : SimpleDBAdapter.getStoredContacts()) {
+                contactView.addView(contact.getListView(this.getContext()));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 

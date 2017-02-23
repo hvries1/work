@@ -20,6 +20,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
+import com.example.data.SimpleDBAdapter;
 import com.example.hadev.myfrontend.R;
 import com.example.hadev.myfrontend.fragment.ContactsFragment;
 import com.example.hadev.myfrontend.fragment.GalleryFragment;
@@ -129,6 +130,7 @@ public class MainActivity extends AppCompatActivity
             showImage();
         } else if (id == R.id.nav_share) {
             shareContacts();
+            SimpleDBAdapter.storeNewContact("ExportedHadev", "0621212121");
         } else if (id == R.id.nav_send) {
             clearContent();
         }
