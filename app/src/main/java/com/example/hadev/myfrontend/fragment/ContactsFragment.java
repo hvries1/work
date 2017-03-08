@@ -2,6 +2,7 @@ package com.example.hadev.myfrontend.fragment;
 
 import android.database.Cursor;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.support.v4.app.Fragment;
@@ -39,12 +40,41 @@ public class ContactsFragment extends Fragment {
             String displayName = cursor.getString(cursor.getColumnIndex(ContactProvider.NAME));
             String phoneNumber = cursor.getString(cursor.getColumnIndex(ContactProvider.PHONE));
             contactView.addView(new Contact(displayName, phoneNumber).getListView(this.getContext()));
+            contactView.addView(new Contact("auth", this.getContext().getText(R.string.auth).toString()).getListView(this.getContext()));
         }
 
         try {
-            for (Contact contact : SimpleDBAdapter.getStoredContacts()) {
-                contactView.addView(contact.getListView(this.getContext()));
-            }
+           new AsyncTask<String, Integer, Contact[]>() {
+                @Override
+                protected void onPreExecute(){
+                    //Setup is done here
+                }
+
+                @Override
+                protected Contact[] doInBackground(String... params) {
+                    return SimpleDBAdapter.getStoredContacts();
+                }
+
+                @Override
+                protected void onProgressUpdate(Integer... params){
+                    //Update a progress bar here, or ignore it, it's up to you
+                }
+
+                @Override
+                protected void onPostExecute(Contact[] contacts){
+                    if (contacts != null) {
+                        LinearLayout contactView = (LinearLayout) ContactsFragment.this.getView().findViewById(R.id.contactview);
+                        for (Contact contact : contacts) {
+                            contactView.addView(contact.getListView(ContactsFragment.this.getContext()));
+                        }
+                    }
+                }
+
+                @Override
+                protected void onCancelled(){
+                    // Handle what you want to do if you cancel this task
+                }
+            }.execute();
         } catch (Exception e) {
             e.printStackTrace();
         }

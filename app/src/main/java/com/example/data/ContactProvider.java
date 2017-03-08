@@ -16,7 +16,7 @@ import android.util.Log;
 
 import java.util.HashMap;
 
-import static android.content.ContentValues.TAG;
+import static com.example.hadev.myfrontend.main.MainActivity.TAG;
 
 /**
  * Created from example on 8-2-2017.
@@ -49,7 +49,7 @@ public class ContactProvider extends ContentProvider {
     private SQLiteDatabase db;
     static final String DATABASE_NAME = "MyFrontend";
     static final String CONTACTS_TABLE_NAME = "contacts";
-    static final int DATABASE_VERSION = 2;
+    static final int DATABASE_VERSION = 3;
     static final String CREATE_DB_TABLE =
             " CREATE TABLE " + CONTACTS_TABLE_NAME +
                     " (_id INTEGER PRIMARY KEY AUTOINCREMENT, " +

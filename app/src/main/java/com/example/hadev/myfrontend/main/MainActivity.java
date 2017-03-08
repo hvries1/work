@@ -4,6 +4,7 @@ import android.Manifest;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ResolveInfo;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
@@ -31,7 +32,7 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
-    private static final String TAG = "MainActivity";
+    public static final String TAG = "MyFrontend";
 
     MyPermissionManager permissionManager = new MyPermissionManager();
 
@@ -59,6 +60,8 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        SimpleDBAdapter.init(this.getText(R.string.auth).toString());
 
         // Handle intent, action and MIME type
         Intent intent = getIntent();
@@ -129,8 +132,15 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.nav_manage) {
             showImage();
         } else if (id == R.id.nav_share) {
-            shareContacts();
-            SimpleDBAdapter.storeNewContact("ExportedHadev", "0621212121");
+            //shareContacts();
+            Log.i(TAG, this.getText(R.string.auth).toString());
+            new AsyncTask<Void, Void, Void>() {
+                @Override
+                protected Void doInBackground(Void... params) {
+                    SimpleDBAdapter.storeNewContact("ExportedHadev", "0621212121");
+                    return null;
+                }
+            }.execute();
         } else if (id == R.id.nav_send) {
             clearContent();
         }
