@@ -39,8 +39,8 @@ public class ContactsFragment extends Fragment {
         while (cursor.moveToNext()) {
             String displayName = cursor.getString(cursor.getColumnIndex(ContactProvider.NAME));
             String phoneNumber = cursor.getString(cursor.getColumnIndex(ContactProvider.PHONE));
-            contactView.addView(new Contact(displayName, phoneNumber).getListView(this.getContext()));
-            contactView.addView(new Contact("auth", this.getContext().getText(R.string.auth).toString()).getListView(this.getContext()));
+            contactView.addView(new Contact(displayName, phoneNumber, "").getListView(this.getContext()));
+            //contactView.addView(new Contact("auth", this.getContext().getText(R.string.auth).toString()).getListView(this.getContext()));
         }
 
         try {

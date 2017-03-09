@@ -133,7 +133,7 @@ public class MainActivity extends AppCompatActivity
             showImage();
         } else if (id == R.id.nav_share) {
             //shareContacts();
-            Log.i(TAG, this.getText(R.string.auth).toString());
+            //Log.i(TAG, this.getText(R.string.auth).toString());
             new AsyncTask<Void, Void, Void>() {
                 @Override
                 protected Void doInBackground(Void... params) {

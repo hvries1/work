@@ -12,22 +12,28 @@ import com.example.hadev.myfrontend.R;
 
 public class Contact implements ViewObject {
 
+    private final String contactId;
     private String displayName;
     private String phoneNumber;
 
-    public Contact(String displayName,String phoneNumber) {
+    public Contact(String displayName, String phoneNumber, String contactId) {
         this.displayName = displayName;
         this.phoneNumber = phoneNumber;
+        this.contactId = contactId;
     }
 
     @Override
     public View getListView(Context context) {
         View contactView= View.inflate(context, R.layout.contact_item, null);
         TextView namePlaceholder = (TextView) contactView.findViewById(R.id.name);
-        namePlaceholder.setText(displayName);
+        namePlaceholder.setText(displayName + getIdTag());
         TextView phonePlaceholder = (TextView) contactView.findViewById(R.id.phone);
         phonePlaceholder.setText(phoneNumber);
         return contactView;
+    }
+
+    private String getIdTag() {
+        return " [" + contactId + "]";
     }
 
     @Override
