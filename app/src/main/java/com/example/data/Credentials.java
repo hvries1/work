@@ -33,23 +33,6 @@ public class Credentials {
         return properties;
     }
 
-    public static void main(String[] args) {
-        String[] keys = {
-                "AULNKGDHNyWuK796ZrT6BfSgPuY6Pb9KMlNmVrJnjtc7fkzuj3_n_iotqmr",
-                "7XlthW9o8}9Y7J2Rfv3z7v9ZiSmzdKAViwK?h<LUui940WlTjsmW0So6M`0Kj"
-        };
-
-        //Properties props = getProperties();
-        System.out.println(Resources.getSystem().getText(R.string.auth));
-
-        Credentials credentials = new Credentials(keys, "<HV>");
-        System.out.println(credentials.getAuth());
-        System.out.println(credentials.getAuth2());
-        System.out.println(credentials);
-        System.out.println(encrypt("123", "456", "7890"));
-        System.out.flush();
-    }
-
     @SuppressWarnings("unused")
     private static String encrypt(String key, String secret, String seed) {
         return new Credentials(seed).encrypt(key.toCharArray(), secret.toCharArray());
@@ -72,19 +55,6 @@ public class Credentials {
     public Credentials(String seed) {
         this.seed = seed;
         this.auth = "";
-    }
-
-    @SuppressWarnings("unused")
-    private String encrypt(char[] cs, char[] cx) {
-        char[] crypt = "UNGHyu76r6&fgu6bKlmrnt7%ku3nitm7lh98972f379imdAiKhLu90ljm0oM0j7hjkUHui&85FG1G0D9A".toCharArray();
-        StringBuilder builder = new StringBuilder();
-        for (int i = 0; i < cs.length; i++) {
-            builder.append((char)(cs[i]+(i%(toint(seed)/2)))).append(crypt[i]);
-        }
-        for (int i = 0; i < cx.length; i++) {
-            builder.append((char)(cx[i]+(i%(toint(seed)/2)))).append(crypt[i+cs.length]);
-        }
-        return builder.toString();
     }
 
     private String decrypt(char[] cs) {
